@@ -1,0 +1,32 @@
+{
+  "name": "smartnetwork_backend",
+  "version": "1.0.0",
+  "description": "A mongoDB based backend for the smartnet application",
+  "main": "index.js",
+  "scripts": {
+    "build": "rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./.babelrc,./package.json,./package-lock.json,./npm-debug.log --copy-files",
+    "start": "node dist/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stefanagloginic/SmartNetwork_Backend.git"
+  },
+  "author": "Stefana Gloginic",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/stefanagloginic/SmartNetwork_Backend/issues"
+  },
+  "homepage": "https://github.com/stefanagloginic/SmartNetwork_Backend#readme",
+  "dependencies": {
+    "express": "^4.16.2",
+    "lodash": "^4.17.4",
+    "mongodb": "^2.2.33"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "rimraf": "^2.6.2"
+  }
+}
