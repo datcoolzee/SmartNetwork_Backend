@@ -1,14 +1,60 @@
-var express = require('express');
+import express from 'express';
+import bodyParser from 'body-parser';
+import _ from 'lodash';
+import tableConfigs from './tableConfigs';
+import db from './db';
+
 var app = express();
+var smartrg_V1_Router = express.Router();
 
 //check for port provided by env
 var port = process.env.PORT || 3000;
 
+// set up body parser for app to extract json from buffer stream
+smartrg_V1_Router.use(bodyParser.urlencoded({
+	extended: true
+}));
+smartrg_V1_Router.use(bodyParser.json());
+
 var welcomeMessage = { message: 'Welcome to SmartNet' };
 
-app.get('/', function (req, res) {
-  res.json(welcomeMessage);
+//root path
+smartrg_V1_Router.get('/', function(req, res, next){
+	res.json(welcomeMessage);
 });
+
+smartrg_V1_Router.route('/heatmaps')
+	.post(
+		function checkJSONValues(req, res, next) {
+			console.log(req.body);
+			next();
+		},	
+		function postHeatmap(req, res, next) {
+			res.status(200).send("Heatmap added to database")
+		});
+
+smartrg_V1_Router.route('/addresses')
+	.post(
+		function checkJSONValues(req, res, next) {
+			var address = req.body;
+			var emptyFields = [];
+
+			console.log(req.body);
+
+			tableConfigs.address_fields.forEach((field) => {
+				if(_.isEmpty(address[field])){
+					emptyFields.push(field);
+				}
+			});
+			
+			emptyFields.length !== 0 ? res.status(400).send("Missing fields: " + emptyFields.join(", ")) : next()
+		},	
+		function postAddress(req, res, next) {
+			res.status(200).send("Address added to database")
+		});
+
+//telling main application to route all to smartrg/v1
+app.use('/smartrg/v1', smartrg_V1_Router);
 
 app.listen(port, function () {
   console.log('Server listening on port ' + port + '!');
