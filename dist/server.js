@@ -12,6 +12,10 @@ var _lodash = require('lodash');
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
+var _jsonValidation = require('json-validation');
+
+var _jsonValidation2 = _interopRequireDefault(_jsonValidation);
+
 var _tableConfigs = require('./tableConfigs');
 
 var _tableConfigs2 = _interopRequireDefault(_tableConfigs);
@@ -48,19 +52,28 @@ smartrg_V1_Router.route('/heatmaps').post(function checkJSONValues(req, res, nex
 	res.status(200).send("Heatmap added to database");
 });
 
-smartrg_V1_Router.route('/address').post(function checkJSONValues(req, res, next) {
+smartrg_V1_Router.route('/addresses').post(function checkJSONValues(req, res, next) {
 	var address = req.body;
-	var emptyFields = [];
+	// var emptyFields = [];
+	var address_schema = _tableConfigs2.default.address_schema;
+	var jv = new _jsonValidation2.default.JSONValidation();
 
-	console.log(req.body);
+	// tableConfigs.address_fields.forEach((field) => {
+	// 	if(_.isEmpty(address[field])){
+	// 		emptyFields.push(field);
+	// 	}
+	// });
 
-	_tableConfigs2.default.address_fields.forEach(function (field) {
-		if (_lodash2.default.isEmpty(address[field])) {
-			emptyFields.push(field);
-		}
-	});
+	var results = jv.validate(address, address_schema);
 
-	emptyFields.length !== 0 ? res.status(400).send("Missing fields: " + emptyFields.join(", ")) : next();
+	// if(emptyFields.length !== 0){
+	// 	res.status(400).send("Missing fields: " + emptyFields.join(", "));
+	// }
+	if (!results.ok) {
+		res.status(400).send("Invalid entries: " + results.errors.join(", ") + " at path " + results.path);
+	} else {
+		next();
+	}
 }, function postAddress(req, res, next) {
 	res.status(200).send("Address added to database");
 });

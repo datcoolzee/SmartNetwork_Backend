@@ -1,6 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import _ from 'lodash';
+import jsonValidation from 'json-validation';
 import tableConfigs from './tableConfigs';
 import db from './db';
 
@@ -37,18 +38,14 @@ smartrg_V1_Router.route('/addresses')
 	.post(
 		function checkJSONValues(req, res, next) {
 			var address = req.body;
-			var emptyFields = [];
+			var address_schema = tableConfigs.address_schema;
+			var jv = new jsonValidation.JSONValidation();
 
-			console.log(req.body);
+			var results = jv.validate(address, address_schema);
 
-			tableConfigs.address_fields.forEach((field) => {
-				if(_.isEmpty(address[field])){
-					emptyFields.push(field);
-				}
-			});
-			
-			emptyFields.length !== 0 ? res.status(400).send("Missing fields: " + emptyFields.join(", ")) : next()
+			!results.ok ? res.status(400).send("Invalid entries: " + results.errors.join(", ") + " at path " + results.path) : next()
 		},	
+		
 		function postAddress(req, res, next) {
 			res.status(200).send("Address added to database")
 		});
