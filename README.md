@@ -21,6 +21,7 @@ Go to [http://localhost:3000/smartRG/v1/](http://localhost:3000/smartRG/v1) to v
 ![diagram](https://github.com/stefanagloginic/SmartNetwork_Backend/blob/master/image/backend_diagram.png)
 
 ## SMARTRG REST API
+### NOTE: MAKE SURE SERVER IS RUNNING
 | REQUEST | LINK |
 | ------ | ------ |
 | POST/GET | All Routers: [http://localhost:3000/smartRG/v1/routers](http://localhost:3000/smartRG/v1/routers) |
@@ -28,6 +29,7 @@ Go to [http://localhost:3000/smartRG/v1/](http://localhost:3000/smartRG/v1) to v
 | POST/GET | All Heatmaps: [http://localhost:3000/smartRG/v1/heatmaps](http://localhost:3000/smartRG/v1/heatmaps) |
 | POST/GET | All Connection Statistics: [http://localhost:3000/smartRG/v1/connection-statistics](http://localhost:3000/smartRG/v1/connection-statistics) |
 | POST/GET | All Pindrops: [http://localhost:3000/smartRG/v1/pindrops](http://localhost:3000/smartRG/v1/pindrops) |
+* A helpful tool to use is [Postman](https://www.getpostman.com/) for making the POST/PATCH/GET requests
 
 ## REFERENCES 
 * Setup for database class [Part 2: Using MongoDB with Node.js](https://www.mongodb.com/blog/post/the-modern-application-stack-part-2-using-mongodb-with-nodejs)
