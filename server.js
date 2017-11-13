@@ -27,12 +27,19 @@ smartrg_V1_Router.get('/', function(req, res, next){
 smartrg_V1_Router.route('/heatmaps')
 	.post(
 		function checkJSONValues(req, res, next) {
-			console.log(req.body);
-			next();
+			var heatmap = req.body;
+			var heatmap_schema = tableConfigs.heatmap_schema;
+			var jv = new jsonValidation.JSONValidation();
+
+			var results = jv.validate(heatmap, heatmap_schema);
+
+			!results.ok ? res.status(400).send("Invalid entries: " + results.errors.join(", ") + " at path " + results.path) : next()
 		},	
+
 		function postHeatmap(req, res, next) {
 			res.status(200).send("Heatmap added to database")
 		});
+
 
 smartrg_V1_Router.route('/addresses')
 	.post(
@@ -45,9 +52,25 @@ smartrg_V1_Router.route('/addresses')
 
 			!results.ok ? res.status(400).send("Invalid entries: " + results.errors.join(", ") + " at path " + results.path) : next()
 		},	
-		
+
 		function postAddress(req, res, next) {
 			res.status(200).send("Address added to database")
+		});
+
+smartrg_V1_Router.route('/routers')
+	.post(
+		function checkJSONValues(req, res, next) {
+			var router = req.body;
+			var router_schema = tableConfigs.router_schema;
+			var jv = new jsonValidation.JSONValidation();
+
+			var results = jv.validate(router, router_schema);
+
+			!results.ok ? res.status(400).send("Invalid entries: " + results.errors.join(", ") + " at path " + results.path) : next()
+		},	
+
+		function postAddress(req, res, next) {
+			res.status(200).send("Router added to database")
 		});
 
 //telling main application to route all to smartrg/v1

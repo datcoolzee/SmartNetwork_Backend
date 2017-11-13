@@ -1,14 +1,4 @@
 export default {
-	address_fields : [
-		'address_id', 
-		'apartment_number', 
-		'apartment_floor', 
-		'city', 
-		'zipcode', 
-		'state', 
-		'street_address', 
-		'country'
-	],
 	address_schema: {
 		"type" : "object",
 		"properties" : {
@@ -19,7 +9,28 @@ export default {
 			"zipcode": { "type" : "string", pattern: '^.{5,}$', required: true  },
 			"state": { "type" : "string", pattern: '^.{2,}$', required: true  },
 			"street_address": { "type" : "string", pattern: '^.{1,}$', required: true  },
-			"country": { "type" : "string", pattern: '^.{1,}$', required: true  }
+			"country": { "type" : "string", pattern: '^.{1,}$', required: true },
 		}
-	}
+	},
+	heatmap_schema: {
+		"type": "object",
+		"properties" : {
+			"heatmap_id": { "type": "string", pattern: '^[0-9]{1,}$', required: true },
+			"time_created": { "type" : "string", pattern: '^[0-9]{1,}$', required: true },
+			"time_modified": { "type" : "string", pattern: '^[0-9]{0,}$', required: true },
+			"address_id": { "type" : "string", pattern: '^[0-9]{1,}$', required: true },
+			"router_id": { "type" : "string", pattern: '^[0-9]{1,}$', required: true },
+		}
+	},
+	router_schema: {
+		"type": "object",
+		"properties" : {
+			"router_id": { "type": "string", pattern: '^[0-9]{1,}$', required: true },
+			"latitude": { "type" : "string", pattern: '^[0-9]{1,}$', required: true },
+			"longitude": { "type" : "string", pattern: '^[0-9]{0,}$', required: true },
+			"time_created": { "type" : "string", pattern: '^[0-9]{1,}$', required: true },
+			"time_modified": { "type" : "string", pattern: '^[0-9]{0,}$', required: true },
+			"mac_address": { "type": "string", pattern: '^.{1,}$', required: true }
+		}
+	},
 }
