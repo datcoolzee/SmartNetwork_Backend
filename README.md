@@ -22,13 +22,13 @@ Go to [http://localhost:3000/smartRG/v1/](http://localhost:3000/smartRG/v1) to v
 
 ## SMARTRG REST API
 ### NOTE: MAKE SURE SERVER IS RUNNING
-| REQUEST | LINK |
-| ------ | ------ |
-| POST/GET | All Routers: [http://localhost:3000/smartRG/v1/routers](http://localhost:3000/smartRG/v1/routers) |
-| POST/GET | All Addresses: [http://localhost:3000/smartRG/v1/addresses](http://localhost:3000/smartRG/v1/addresses) |
-| POST/GET | All Heatmaps: [http://localhost:3000/smartRG/v1/heatmaps](http://localhost:3000/smartRG/v1/heatmaps) |
-| POST/GET | All Connection Statistics: [http://localhost:3000/smartRG/v1/connection-statistics](http://localhost:3000/smartRG/v1/connection-statistics) |
-| POST/GET | All Pindrops: [http://localhost:3000/smartRG/v1/pindrops](http://localhost:3000/smartRG/v1/pindrops) |
+| REQUEST | LINK | STATUS CODE |
+| ------ | ------ | ------ |
+| POST/GET | All Routers: [http://localhost:3000/smartRG/v1/routers](http://localhost:3000/smartRG/v1/routers) | OK: 200 INVALID ENTRIES: 400 SERVER ERROR: 500 |
+| POST/GET | All Addresses: [http://localhost:3000/smartRG/v1/addresses](http://localhost:3000/smartRG/v1/addresses) | OK: 200 INVALID ENTRIES: 400 SERVER ERROR: 500 |
+| POST/GET | All Heatmaps: [http://localhost:3000/smartRG/v1/heatmaps](http://localhost:3000/smartRG/v1/heatmaps) | OK: 200 INVALID ENTRIES: 400 SERVER ERROR: 500 |
+| POST/GET | All Connection Statistics: [http://localhost:3000/smartRG/v1/connection-statistics](http://localhost:3000/smartRG/v1/connection-statistics) | OK: 200 INVALID ENTRIES: 400 SERVER ERROR: 500 |
+| POST/GET | All Pindrops: [http://localhost:3000/smartRG/v1/pindrops](http://localhost:3000/smartRG/v1/pindrops) | OK: 200 INVALID ENTRIES: 400 SERVER ERROR: 500 |
 * A helpful tool to use is [Postman](https://www.getpostman.com/) for making the POST/PATCH/GET requests
 
 ## REFERENCES 
