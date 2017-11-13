@@ -32,7 +32,7 @@ pindropsRouter.route('/').post(function checkJSONValues(req, res, next) {
 	var results = jv.validate(pindrop, pindrop_schema);
 
 	!results.ok ? res.status(400).send("Invalid entries: " + results.errors.join(", ") + " at path " + results.path) : next();
-}, function postAddress(req, res, next) {
+}, function postPindrop(req, res, next) {
 	res.status(200).send("Pindrop added to database");
 });
 

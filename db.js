@@ -14,7 +14,7 @@ class db{
 			}
 			else{
 				var _self = self;
-
+				
 				MongoClient.connect(connection_string)
 				.then(
 					function(database){

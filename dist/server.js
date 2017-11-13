@@ -8,10 +8,6 @@ var _bodyParser = require('body-parser');
 
 var _bodyParser2 = _interopRequireDefault(_bodyParser);
 
-var _db = require('./db');
-
-var _db2 = _interopRequireDefault(_db);
-
 var _v1Routes = require('./v1Routes');
 
 var _v1Routes2 = _interopRequireDefault(_v1Routes);

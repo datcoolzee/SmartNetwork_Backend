@@ -17,7 +17,7 @@ connectionStatsRouter.route('/')
 			!results.ok ? res.status(400).send("Invalid entries: " + results.errors.join(", ") + " at path " + results.path) : next()
 		},	
 
-		function postAddress(req, res, next) {
+		function postConnectionStat(req, res, next) {
 			res.status(200).send("Connection Statistics added to database")
 		});
 

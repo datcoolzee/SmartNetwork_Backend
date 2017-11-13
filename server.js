@@ -1,6 +1,5 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import db from './db';
 
 import v1Routes from './v1Routes';
 
