@@ -16,7 +16,7 @@ var _jsonValidation = require('json-validation');
 
 var _jsonValidation2 = _interopRequireDefault(_jsonValidation);
 
-var _tableConfigs = require('../tableConfigs');
+var _tableConfigs = require('../Configs/tableConfigs');
 
 var _tableConfigs2 = _interopRequireDefault(_tableConfigs);
 
