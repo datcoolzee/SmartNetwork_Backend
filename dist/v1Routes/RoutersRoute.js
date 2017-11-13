@@ -46,25 +46,24 @@ routersRouter.route('/').post(function checkJSONValues(req, res, next) {
 
 	database.connect('mongodb://localhost:27017').then(function () {
 		var routerCollection = database.db.collection('routers');
-		routerCollection.insertOne(router);
 
-		// have timeout and fetch document to ensure it has been properly inserted
-		setTimeout(function () {
+		routerCollection.insertOne(router, function (err, r) {
+			if (err) {
+				res.status(500).send("Failed to add record to database " + err);
+			} else if (r.insertedCount === 1) {
+				//success send back a status code and maybe the id of the object
+				res.status(200).send("Router added to database");
+			} else {
+				res.status(500).send("Failed to add record to database");
+			}
+		});
 
-			// Fetch the document
-			routerCollection.findOne(router, function (err, item) {
-				_assert2.default.equal(null, err);
-				_assert2.default.equal(router.mac_address, item.mac_address);
-				database.close();
-			});
-		}, 100);
+		database.close();
 	}, function (err) {
 		// DB connection failed, add context to the error and throw it (it will be
 		// converted to a rejected promise
 		throw "Failed to connect to the database: " + err;
 	});
-
-	res.status(200).send("Router added to database");
 }).get(function (req, res, next) {
 	var database = new _db2.default();
 
@@ -73,7 +72,7 @@ routersRouter.route('/').post(function checkJSONValues(req, res, next) {
 
 		routerCollection.find().toArray(function (err, docs) {
 			res.json(docs);
-
+			res.status(200);
 			database.close();
 		});
 	}, function (err) {
@@ -81,6 +80,8 @@ routersRouter.route('/').post(function checkJSONValues(req, res, next) {
 	});
 });
 
-routersRouter.route('/:routerId').get(function getRouterById() {});
+routersRouter.route('/:routerId').get(function getRouterById() {
+	//TODO
+});
 
 exports.default = routersRouter;

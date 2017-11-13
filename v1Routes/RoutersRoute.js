@@ -27,26 +27,28 @@ routersRouter.route('/')
 				.then(
 					function(){
 						var routerCollection = database.db.collection('routers');
-						routerCollection.insertOne(router);
 
-						// have timeout and fetch document to ensure it has been properly inserted
-						setTimeout(function() {
+						routerCollection.insertOne(router, function(err, r){
+							if(err){
+								res.status(500).send("Failed to add record to database " + err);
+							}
+							else if(r.insertedCount === 1){
+								//success send back a status code and maybe the id of the object
+								res.status(200).send("Router added to database");
+							}
+							else{
+								res.status(500).send("Failed to add record to database");
+							}
+						});
+						
+						database.close();
 
-						    // Fetch the document
-						    routerCollection.findOne(router, function(err, item) {
-						        assert.equal(null, err);
-						        assert.equal(router.mac_address, item.mac_address);
-						        database.close();
-						    })
-						  }, 100);
 					},
 					function(err) {
 						// DB connection failed, add context to the error and throw it (it will be
 						// converted to a rejected promise
 						throw("Failed to connect to the database: " + err);
 					})
-
-			res.status(200).send("Router added to database")
 		})
 	.get(
 		function(req, res, next) {
@@ -59,14 +61,13 @@ routersRouter.route('/')
 
 						routerCollection.find().toArray(function(err, docs){
 							res.json(docs);
-
+							res.status(200);
 							database.close();
 						});
 					},
 					function(err){
 						throw("Failed to connect to the database: " + err);
 					})
-			res.status(200);
 	});
 
 routersRouter.route('/:routerId')
