@@ -29,3 +29,8 @@ Go to [http://localhost:3000/smartRG/v1/](http://localhost:3000/smartRG/v1) to v
 | POST/GET | All Connection Statistics: [http://localhost:3000/smartRG/v1/connection-statistics](http://localhost:3000/smartRG/v1/connection-statistics) |
 | POST/GET | All Pindrops: [http://localhost:3000/smartRG/v1/pindrops](http://localhost:3000/smartRG/v1/pindrops) |
 
+## REFERENCES 
+* Setup for database class [Part 2: Using MongoDB with Node.js](https://www.mongodb.com/blog/post/the-modern-application-stack-part-2-using-mongodb-with-nodejs)
+* MongoDB documentation [MongoDB](http://mongodb.github.io/node-mongodb-native/2.2/api/)
+* Chainable Routing using express.js [Express Routing](https://expressjs.com/en/guide/routing.html)
+* Schema for validation of fields [npm json-validation](https://npm.runkit.com/json-validation)
