@@ -1,7 +1,7 @@
 import express from 'express';
 import _ from 'lodash';
 import jsonValidation from 'json-validation';
-import tableConfigs from '../tableConfigs';
+import tableConfigs from '../Configs/tableConfigs';
 
 var addressesRouter = express.Router();
 
