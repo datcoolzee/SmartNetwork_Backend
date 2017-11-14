@@ -1,4 +1,9 @@
 export default {
-    heatMapPath: '/v1/smartrg/heatmaps',
-    heatMapByIdPath: '/v1/smartrg/heatmaps/:heatmapId',
+    mongodb: 'mongodb://localhost:27017',
+    connection_statistics: '/connection-statistics',
+    heatmaps: '/heatmaps',
+    addresses: '/addresses',
+    routers: '/routers',
+    pindrops: '/pindrops',
+    routerByMacAddress: '/by-mac-address/:mac_address',
 }

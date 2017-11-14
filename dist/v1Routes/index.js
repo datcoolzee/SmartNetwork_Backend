@@ -28,13 +28,17 @@ var _connectionStatsRoute = require('./connectionStatsRoute');
 
 var _connectionStatsRoute2 = _interopRequireDefault(_connectionStatsRoute);
 
+var _paths = require('../paths');
+
+var _paths2 = _interopRequireDefault(_paths);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /*make main router for v1 api*/
-var smartrg_V1_Router = _express2.default.Router();
+
 
 /*import all routes that will be used here*/
-
+var smartrg_V1_Router = _express2.default.Router();
 
 var welcomeMessage = { message: 'Welcome to SmartNet' };
 
@@ -42,10 +46,10 @@ smartrg_V1_Router.get('/', function (req, res, next) {
 	res.json(welcomeMessage);
 });
 
-smartrg_V1_Router.use('/heatmaps', _HeatmapsRoute2.default);
-smartrg_V1_Router.use('/addresses', _AddressesRoute2.default);
-smartrg_V1_Router.use('/routers', _RoutersRoute2.default);
-smartrg_V1_Router.use('/pindrops', _PindropsRoute2.default);
-smartrg_V1_Router.use('/connection-statistics', _connectionStatsRoute2.default);
+smartrg_V1_Router.use(_paths2.default.heatmaps, _HeatmapsRoute2.default);
+smartrg_V1_Router.use(_paths2.default.addresses, _AddressesRoute2.default);
+smartrg_V1_Router.use(_paths2.default.routers, _RoutersRoute2.default);
+smartrg_V1_Router.use(_paths2.default.pindrops, _PindropsRoute2.default);
+smartrg_V1_Router.use(_paths2.default.connection_statistics, _connectionStatsRoute2.default);
 
 exports.default = smartrg_V1_Router;

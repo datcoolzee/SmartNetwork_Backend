@@ -3,6 +3,7 @@ import _ from 'lodash';
 import jsonValidation from 'json-validation';
 import assert from 'assert'
 import tableConfigs from '../Configs/tableConfigs';
+import paths from '../paths';
 import db from '../db';
 
 var routersRouter = express.Router();
@@ -23,7 +24,7 @@ routersRouter.route('/')
 			var router = req.body;
 			var database = new db();
 
-			database.connect('mongodb://localhost:27017')
+			database.connect(paths.mongodb)
 				.then(
 					function(){
 						var routerCollection = database.db.collection('routers');
@@ -54,7 +55,7 @@ routersRouter.route('/')
 		function(req, res, next) {
 			var database = new db();
 
-			database.connect('mongodb://localhost:27017')
+			database.connect(paths.mongodb)
 				.then(
 					function(){
 						var routerCollection = database.db.collection('routers');
@@ -70,13 +71,13 @@ routersRouter.route('/')
 					})
 	});
 
-routersRouter.route('/by-mac-address/:mac_address')
+routersRouter.route(paths.routerByMacAddress)
 	.get(
 		function(req, res, next){
 			var mac_address = req.params.mac_address;
 			var database = new db();
 
-			database.connect('mongodb://localhost:27017')
+			database.connect(paths.mongodb)
 				.then(
 					function(){
 						var routerCollection = database.db.collection('routers');

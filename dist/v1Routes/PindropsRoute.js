@@ -20,6 +20,10 @@ var _tableConfigs = require('../Configs/tableConfigs');
 
 var _tableConfigs2 = _interopRequireDefault(_tableConfigs);
 
+var _paths = require('../paths');
+
+var _paths2 = _interopRequireDefault(_paths);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var pindropsRouter = _express2.default.Router();

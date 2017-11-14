@@ -2,6 +2,7 @@ import express from 'express';
 import _ from 'lodash';
 import jsonValidation from 'json-validation';
 import tableConfigs from '../Configs/tableConfigs';
+import paths from '../paths';
 
 var connectionStatsRouter = express.Router();
 

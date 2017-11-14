@@ -24,6 +24,10 @@ var _tableConfigs = require('../Configs/tableConfigs');
 
 var _tableConfigs2 = _interopRequireDefault(_tableConfigs);
 
+var _paths = require('../paths');
+
+var _paths2 = _interopRequireDefault(_paths);
+
 var _db = require('../db');
 
 var _db2 = _interopRequireDefault(_db);
@@ -44,7 +48,7 @@ routersRouter.route('/').post(function checkJSONValues(req, res, next) {
 	var router = req.body;
 	var database = new _db2.default();
 
-	database.connect('mongodb://localhost:27017').then(function () {
+	database.connect(_paths2.default.mongodb).then(function () {
 		var routerCollection = database.db.collection('routers');
 
 		routerCollection.insertOne(router, function (err, r) {
@@ -67,7 +71,7 @@ routersRouter.route('/').post(function checkJSONValues(req, res, next) {
 }).get(function (req, res, next) {
 	var database = new _db2.default();
 
-	database.connect('mongodb://localhost:27017').then(function () {
+	database.connect(_paths2.default.mongodb).then(function () {
 		var routerCollection = database.db.collection('routers');
 
 		routerCollection.find().toArray(function (err, docs) {
@@ -80,11 +84,11 @@ routersRouter.route('/').post(function checkJSONValues(req, res, next) {
 	});
 });
 
-routersRouter.route('/by-mac-address/:mac_address').get(function (req, res, next) {
+routersRouter.route(_paths2.default.routerByMacAddress).get(function (req, res, next) {
 	var mac_address = req.params.mac_address;
 	var database = new _db2.default();
 
-	database.connect('mongodb://localhost:27017').then(function () {
+	database.connect(_paths2.default.mongodb).then(function () {
 		var routerCollection = database.db.collection('routers');
 
 		// find router in routers db according to existing mac_address field and value from req 
