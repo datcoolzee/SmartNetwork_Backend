@@ -20,6 +20,10 @@ var _tableConfigs = require('../Configs/tableConfigs');
 
 var _tableConfigs2 = _interopRequireDefault(_tableConfigs);
 
+var _db = require('../db');
+
+var _db2 = _interopRequireDefault(_db);
+
 var _paths = require('../paths');
 
 var _paths2 = _interopRequireDefault(_paths);
@@ -37,7 +41,47 @@ addressesRouter.route('/').post(function checkJSONValues(req, res, next) {
 
 	!results.ok ? res.status(400).send("Invalid entries: " + results.errors.join(", ") + " at path " + results.path) : next();
 }, function postAddress(req, res, next) {
-	res.status(200).send("Address added to database");
+	var address = req.body;
+	var database = new _db2.default();
+
+	database.connect(_paths2.default.mongodb).then(function () {
+		var addressesCollection = database.db.collection('addresses');
+
+		addressesCollection.insertOne(address, function (err, address) {
+			if (err) {
+				res.status(500).send("Failed to add record to database " + err);
+			} else if (address.insertedCount === 1) {
+				//success send back a status code and maybe the id of the object
+				res.status(200).send("Address added to database");
+			} else {
+				res.status(500).send("Failed to add record to database");
+			}
+
+			database.close();
+		});
+	}, function (err) {
+		// DB connection failed, add context to the error and throw it (it will be
+		// converted to a rejected promise
+		throw "Failed to connect to the database: " + err;
+	});
+}).get(function (req, res, next) {
+	var database = new _db2.default();
+
+	database.connect(_paths2.default.mongodb).then(function () {
+		var addressesCollection = database.db.collection('addresses');
+
+		addressesCollection.find().toArray(function (err, docs) {
+			if (!err) {
+				res.json(docs);
+				res.status(200);
+			} else {
+				res.status(500).send("Internal server error");
+			}
+			database.close();
+		});
+	}, function (err) {
+		throw "Failed to connect to the database: " + err;
+	});
 });
 
 exports.default = addressesRouter;
