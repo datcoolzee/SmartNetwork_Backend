@@ -70,10 +70,37 @@ routersRouter.route('/')
 					})
 	});
 
-routersRouter.route('/:routerId')
+routersRouter.route('/by-mac-address/:mac_address')
 	.get(
-		function getRouterById(){
-			//TODO
+		function(req, res, next){
+			var mac_address = req.params.mac_address;
+			var database = new db();
+
+			database.connect('mongodb://localhost:27017')
+				.then(
+					function(){
+						var routerCollection = database.db.collection('routers');
+
+						// find router in routers db according to existing mac_address field and value from req 
+						routerCollection.findOne({ "mac_address" : { $eq : mac_address }})
+							.then((router) => {
+								if(router){
+									res.status(200);
+									res.json(router);
+								}
+								else{
+									// no 404 indicates that the data doesnt exist in the database
+									res.status(404).send("Router with MAC Address " + mac_address + " could not be found");
+								}
+							})
+							.catch((err) => {
+								res.status(500).send("Server Error: Failed to GET " + err);
+							});
+					},
+					function(err){
+						throw("Failed to connect to the database: " + err);
+					}
+				)
 		})
 
 export default routersRouter

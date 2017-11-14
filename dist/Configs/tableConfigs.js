@@ -7,7 +7,6 @@ exports.default = {
 	address_schema: {
 		"type": "object",
 		"properties": {
-			"address_id": { "type": "string", pattern: '^[0-9]{1,}$' },
 			"apartment_number": { "type": "string", pattern: '^[0-9]{1,}$' },
 			"apartment_floor": { "type": "string", pattern: '^[0-9]{1,}$' },
 			"city": { "type": "string", pattern: '^.{1,}$', required: true },
@@ -20,7 +19,6 @@ exports.default = {
 	heatmap_schema: {
 		"type": "object",
 		"properties": {
-			"heatmap_id": { "type": "string", pattern: '^[0-9]{1,}$' },
 			"time_created": { "type": "string", pattern: '^[0-9]{1,}$', required: true },
 			"time_modified": { "type": "string", pattern: '^[0-9]{0,}$', required: true },
 			"address_id": { "type": "string", pattern: '^[0-9]{1,}$' },
@@ -30,7 +28,6 @@ exports.default = {
 	router_schema: {
 		"type": "object",
 		"properties": {
-			"router_id": { "type": "string", pattern: '^[0-9]{1,}$' },
 			"latitude": { "type": "string", pattern: '^[0-9]{1,}$', required: true },
 			"longitude": { "type": "string", pattern: '^[0-9]{1,}$', required: true },
 			"time_created": { "type": "string", pattern: '^[0-9]{1,}$', required: true },
@@ -41,7 +38,6 @@ exports.default = {
 	pindrop_schema: {
 		"type": "object",
 		"properties": {
-			"pindrop_id": { "type": "string", pattern: '^[0-9]{1,}$' },
 			"heatmap_id": { "type": "string", pattern: '^[0-9]{1,}$' },
 			"latitude": { "type": "string", pattern: '^[0-9]{1,}$', required: true },
 			"longitude": { "type": "string", pattern: '^[0-9]{1,}$', required: true },
@@ -53,7 +49,6 @@ exports.default = {
 	conn_stat_schema: {
 		"type": "object",
 		"properties": {
-			"connection_stats_id": { "type": "string", pattern: '^[0-9]{1,}$' },
 			"upstream_bps": { "type": "string", pattern: '^[0-9]{1,}$', required: true },
 			"client_rssi": { "type": "string", pattern: '^[0-9]{1,}$', required: true },
 			"router_rssi": { "type": "string", pattern: '^[0-9]{1,}$', required: true },
