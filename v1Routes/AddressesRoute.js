@@ -37,8 +37,8 @@ addressesRouter.route('/')
 									console.log(err);
 								}
 							)
-						}
-					database.close();
+						database.close();
+					}
 				)
 		})
 	.get(

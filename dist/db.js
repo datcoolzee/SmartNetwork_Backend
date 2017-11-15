@@ -57,7 +57,7 @@ var db = function db() {
 							res.status(500).send("Failed to add record to database " + err);
 							reject(err.message);
 						} else if (req.insertedCount === 1) {
-							//success send back a status code and maybe the id of the object
+							// success send back a status code and maybe the id of the object
 							res.status(200).send("Added to " + collectionName + " database");
 							resolve();
 						} else {
@@ -71,6 +71,9 @@ var db = function db() {
 	};
 
 	this.db = null;
-};
+}
+
+// attempts to insert data given collection and response object
+;
 
 exports.default = db;

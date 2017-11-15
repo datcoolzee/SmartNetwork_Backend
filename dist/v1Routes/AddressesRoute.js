@@ -44,41 +44,13 @@ addressesRouter.route('/').post(function checkJSONValues(req, res, next) {
 	var address = req.body;
 	var database = new _db2.default();
 
-	// database.connect(paths.mongodb)
-	// 	.then(
-	// 		() => {
-	// 			var addressesCollection = database.db.collection('addresses');
-
-	// 			addressesCollection.insertOne(address, function(err, address){
-	// 				if(err){
-	// 					res.status(500).send("Failed to add record to database " + err);
-	// 				}
-	// 				else if(address.insertedCount === 1){
-	// 					//success send back a status code and maybe the id of the object
-	// 					res.status(200).send("Address added to database");
-	// 				}
-	// 				else{
-	// 					res.status(500).send("Failed to add record to database");
-	// 				}
-
-	// 				database.close();
-	// 			});
-	// 		},
-	// 		(err) => {
-	// 			// DB connection failed, add context to the error and throw it (it will be
-	// 			// converted to a rejected promise
-	// 			throw("Failed to connect to the database: " + err);
-	// 		}
-	// 	)
-
 	database.connect(_paths2.default.mongodb).then(function () {
 		database.insertOne('addresses', address, res).then(function () {
 			console.log('success');
-			database.close();
 		}).catch(function (err) {
 			console.log(err);
-			database.close();
 		});
+		database.close();
 	});
 }).get(function (req, res, next) {
 	var database = new _db2.default();
