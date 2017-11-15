@@ -26,28 +26,19 @@ addressesRouter.route('/')
 			database.connect(paths.mongodb)
 				.then(
 					() => {
-						var addressesCollection = database.db.collection('addresses');
-
-						addressesCollection.insertOne(address, function(err, address){
-							if(err){
-								res.status(500).send("Failed to add record to database " + err);
-							}
-							else if(address.insertedCount === 1){
-								//success send back a status code and maybe the id of the object
-								res.status(200).send("Address added to database");
-							}
-							else{
-								res.status(500).send("Failed to add record to database");
-							}
-
-							database.close();
-						});
-					},
-					(err) => {
-						// DB connection failed, add context to the error and throw it (it will be
-						// converted to a rejected promise
-						throw("Failed to connect to the database: " + err);
-					}
+						database.insertOne('addresses', address, res)
+							.then(
+								() => {
+									console.log('success');
+								}
+							)
+							.catch(
+								(err) => {
+									console.log(err);
+								}
+							)
+						}
+					database.close();
 				)
 		})
 	.get(

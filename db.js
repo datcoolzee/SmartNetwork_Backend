@@ -43,6 +43,38 @@ class db{
 			)
 		}
 	}
+
+	// attempts to insert data given collection and response object
+	insertOne = (collectionName, req, res) => {
+		var self = this;
+
+		return new Promise(function(resolve, reject){
+			self.db.collection(collectionName, function(err, collection){
+				if(err){
+					console.log("Could not access collection: " + err.message);
+					reject(err.message);
+				}
+				else{
+					collection.insertOne(req, function(err, req){
+						if(err){
+							res.status(500).send("Failed to add record to database " + err);
+							reject(err.message);
+						}
+						else if(req.insertedCount === 1){
+							// success send back a status code and maybe the id of the object
+							res.status(200).send("Added to " + collectionName + " database");
+							resolve();
+						}
+						else{
+							res.status(500).send("Failed to add record to database");
+							reject(err.message);
+						}
+					})
+				}
+			})
+		});
+	}
+
 }
 
 export default db
