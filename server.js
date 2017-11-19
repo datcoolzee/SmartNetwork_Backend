@@ -6,7 +6,7 @@ import v1Routes from './v1Routes';
 var app = express();
 
 //check for port provided by env
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || 8080;
 
 /*----------------ADD MIDDLEWARE-----------------*/
 // set up body parser for app to extract json from buffer stream 
