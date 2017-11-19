@@ -24,9 +24,9 @@ var _PindropsRoute = require('./PindropsRoute');
 
 var _PindropsRoute2 = _interopRequireDefault(_PindropsRoute);
 
-var _connectionStatsRoute = require('./connectionStatsRoute');
+var _ConnectionStatsRoute = require('./ConnectionStatsRoute');
 
-var _connectionStatsRoute2 = _interopRequireDefault(_connectionStatsRoute);
+var _ConnectionStatsRoute2 = _interopRequireDefault(_ConnectionStatsRoute);
 
 var _paths = require('../paths');
 
@@ -50,6 +50,6 @@ smartrg_V1_Router.use(_paths2.default.heatmaps, _HeatmapsRoute2.default);
 smartrg_V1_Router.use(_paths2.default.addresses, _AddressesRoute2.default);
 smartrg_V1_Router.use(_paths2.default.routers, _RoutersRoute2.default);
 smartrg_V1_Router.use(_paths2.default.pindrops, _PindropsRoute2.default);
-smartrg_V1_Router.use(_paths2.default.connection_statistics, _connectionStatsRoute2.default);
+smartrg_V1_Router.use(_paths2.default.connection_statistics, _ConnectionStatsRoute2.default);
 
 exports.default = smartrg_V1_Router;

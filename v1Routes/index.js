@@ -5,7 +5,7 @@ import heatmapRouter from './HeatmapsRoute';
 import addressesRouter from './AddressesRoute';
 import routersRouter from './RoutersRoute';
 import pindropsRouter from './PindropsRoute'
-import connectionStatsRouter from './connectionStatsRoute';
+import connectionStatsRouter from './ConnectionStatsRoute';
 import paths from '../paths';
 
 /*make main router for v1 api*/
