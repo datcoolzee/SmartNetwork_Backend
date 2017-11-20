@@ -3,6 +3,7 @@ import _ from 'lodash';
 import jsonValidation from 'json-validation';
 import tableConfigs from '../Configs/tableConfigs';
 import paths from '../paths';
+import db from '../db';
 
 var connectionStatsRouter = express.Router();
 
@@ -19,7 +20,49 @@ connectionStatsRouter.route('/')
 		},	
 
 		function postConnectionStat(req, res, next) {
-			res.status(200).send("Connection Statistics added to database")
+			var conn_stat = req.body;
+			var database = new db();
+
+			database.connect(paths.mongodb)
+				.then(
+					() => {
+						database.insertOne('connection-statistics', conn_stat, res)
+							.then(
+								() => {
+									console.log('success');
+								})
+							.catch(
+								(err) => {
+									console.log('error ' + err);
+								})
+						database.close();
+					}
+				)
+		})
+	.get(
+		(req, res, next) => {
+			var database = new db();
+
+			database.connect(paths.mongodb)
+				.then(
+					() => {
+						var connStatsCollection = database.db.collection('connection-statistics');
+
+						connStatsCollection.find().toArray(function(err, docs){
+							if(!err){
+								res.json(docs);
+								res.status(200);
+							}
+							else{
+								res.status(500).send("Internal server error");
+							}
+							database.close();
+						});
+					},
+					(err) => {
+						throw("Failed to connect to the database: " + err);
+					}
+				)
 		});
 
 export default connectionStatsRouter

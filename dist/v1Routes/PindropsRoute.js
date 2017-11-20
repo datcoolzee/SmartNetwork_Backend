@@ -52,7 +52,6 @@ pindropsRouter.route('/').post(function checkJSONValues(req, res, next) {
 		});
 		database.close();
 	});
-	res.status(200).send("Pindrop added to database");
 }).get(function (req, res, next) {
 	var database = new _db2.default();
 

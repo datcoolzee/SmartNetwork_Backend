@@ -40,7 +40,6 @@ pindropsRouter.route('/')
 						database.close();
 					}
 				)
-			res.status(200).send("Pindrop added to database")
 		})
 	.get(
 		(req, res, next) => {

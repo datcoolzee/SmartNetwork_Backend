@@ -24,6 +24,10 @@ var _paths = require('../paths');
 
 var _paths2 = _interopRequireDefault(_paths);
 
+var _db = require('../db');
+
+var _db2 = _interopRequireDefault(_db);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var connectionStatsRouter = _express2.default.Router();
@@ -37,7 +41,35 @@ connectionStatsRouter.route('/').post(function checkJSONValues(req, res, next) {
 
 	!results.ok ? res.status(400).send("Invalid entries: " + results.errors.join(", ") + " at path " + results.path) : next();
 }, function postConnectionStat(req, res, next) {
-	res.status(200).send("Connection Statistics added to database");
+	var conn_stat = req.body;
+	var database = new _db2.default();
+
+	database.connect(_paths2.default.mongodb).then(function () {
+		database.insertOne('connection-statistics', conn_stat, res).then(function () {
+			console.log('success');
+		}).catch(function (err) {
+			console.log('error ' + err);
+		});
+		database.close();
+	});
+}).get(function (req, res, next) {
+	var database = new _db2.default();
+
+	database.connect(_paths2.default.mongodb).then(function () {
+		var connStatsCollection = database.db.collection('connection-statistics');
+
+		connStatsCollection.find().toArray(function (err, docs) {
+			if (!err) {
+				res.json(docs);
+				res.status(200);
+			} else {
+				res.status(500).send("Internal server error");
+			}
+			database.close();
+		});
+	}, function (err) {
+		throw "Failed to connect to the database: " + err;
+	});
 });
 
 exports.default = connectionStatsRouter;

@@ -17,7 +17,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var app = (0, _express2.default)();
 
 //check for port provided by env
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || 8080;
 
 /*----------------ADD MIDDLEWARE-----------------*/
 // set up body parser for app to extract json from buffer stream 
