@@ -29,7 +29,7 @@ heatmapsRouter.route('/')
 						database.insertOne('heatmaps', heatmap, res)
 							.then(
 								() => {
-									console.log('success');
+									console.log("success");
 								})
 							.catch(
 								(err) => {

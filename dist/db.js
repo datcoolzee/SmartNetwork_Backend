@@ -58,7 +58,12 @@ var db = function db() {
 							reject(err.message);
 						} else if (req.insertedCount === 1) {
 							// success send back a status code and maybe the id of the object
-							res.status(200).send("Added to " + collectionName + " database");
+							res.status(200).json({
+								message: "Added to " + collectionName + " database",
+								data: {
+									_id: req.insertedId
+								}
+							});
 							resolve();
 						} else {
 							res.status(500).send("Failed to add record to database");

@@ -62,7 +62,12 @@ class db{
 						}
 						else if(req.insertedCount === 1){
 							// success send back a status code and maybe the id of the object
-							res.status(200).send("Added to " + collectionName + " database");
+							res.status(200).json({
+								message: "Added to " + collectionName + " database",
+								data: {
+									_id: req.insertedId
+								}
+							});
 							resolve();
 						}
 						else{
