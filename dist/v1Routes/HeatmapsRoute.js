@@ -46,7 +46,7 @@ heatmapsRouter.route('/').post(function checkJSONValues(req, res, next) {
 
 	database.connect(_paths2.default.mongodb).then(function () {
 		database.insertOne('heatmaps', heatmap, res).then(function () {
-			console.log('success');
+			console.log("success");
 		}).catch(function (err) {
 			console.log('error ' + err);
 		});

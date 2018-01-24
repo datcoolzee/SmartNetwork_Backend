@@ -26,7 +26,7 @@ app.use(_bodyParser2.default.urlencoded({
 }));
 app.use(_bodyParser2.default.json());
 
-/*----------------ADD Routers-------------------*/
+/*----------------ADD Routes-------------------*/
 app.use('/smartrg/v1', _v1Routes2.default);
 
 /*----------------START LISTENING---------------*/
