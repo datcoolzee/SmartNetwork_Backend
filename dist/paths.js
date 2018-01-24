@@ -10,5 +10,6 @@ exports.default = {
     addresses: '/addresses',
     routers: '/routers',
     pindrops: '/pindrops',
-    routerByMacAddress: '/by-mac-address/:mac_address'
+    routerByMacAddress: '/by-mac-address/:mac_address',
+    addressByMacAddress: '/by-mac-address/:mac_address'
 };

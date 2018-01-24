@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
-/*----------------ADD Routers-------------------*/
+/*----------------ADD Routes-------------------*/
 app.use('/smartrg/v1', v1Routes);
 
 /*----------------START LISTENING---------------*/

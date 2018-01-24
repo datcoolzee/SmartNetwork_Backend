@@ -9,6 +9,7 @@ export default {
 			"state": { "type" : "string", pattern: '^.{2,}$', required: true  },
 			"street_address": { "type" : "string", pattern: '^.{1,}$', required: true  },
 			"country": { "type" : "string", pattern: '^.{1,}$', required: true },
+			"mac_address": { "type": "string", pattern: '^.{1,}$', required: true },
 		}
 	},
 	heatmap_schema: {
@@ -16,8 +17,7 @@ export default {
 		"properties" : {
 			"time_created": { "type" : "string", pattern: '^[0-9]{1,}$', required: true },
 			"time_modified": { "type" : "string", pattern: '^[0-9]{0,}$', required: true },
-			"address_id": { "type" : "string", pattern: '^[0-9]{1,}$' },
-			"router_id": { "type" : "string", pattern: '^[0-9]{1,}$' },
+			"mac_address": { "type": "string", pattern: '^.{1,}$', required: true },
 		}
 	},
 	router_schema: {

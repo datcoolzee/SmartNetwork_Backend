@@ -66,5 +66,37 @@ addressesRouter.route('/')
 					}
 				)
 		})
+addressesRouter.route(paths.addressByMacAddress)
+	.get(
+		(req, res, next) => {
+			var mac_address = req.params.mac_address;
+			var database = new db();
+
+			database.connect(paths.mongodb)
+				.then(
+					function(){
+						var addressCollection = database.db.collection('addresses');
+
+						// find address in addresses db according to existing mac_address field and value from req 
+						addressCollection.findOne({ "mac_address" : { $eq : mac_address }})
+							.then((address) => {
+								if(address){
+									res.status(200);
+									res.json(address);
+								}
+								else{
+									// 404 indicates that the data doesnt exist in the database
+									res.status(404).send("Address with MAC Address " + mac_address + " could not be found");
+								}
+							})
+							.catch((err) => {
+								res.status(500).send("Server Error: Failed to GET " + err);
+							});
+					},
+					function(err){
+						throw("Failed to connect to the database: " + err);
+					}
+				)
+		})
 
 export default addressesRouter
