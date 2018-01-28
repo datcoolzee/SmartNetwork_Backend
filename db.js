@@ -80,6 +80,42 @@ class db{
 		});
 	}
 
+	findAndUpdate = (collectionName, req, res, filterObj) => {
+		var self = this;
+
+		return new Promise(function(resolve, reject){
+			self.db.collection(collectionName, function(err, collection){
+				if(err){
+					console.log("Could not access collection: " + err.message);
+					reject(err.message);
+				}
+				else{
+					collection.findOneAndUpdate(filterObj, {$set: req.body}, { returnNewDocument: true }, function(err, result){
+						if(err){
+							res.status(500).send("Failed to update record in database " + err);
+							reject(err.message);
+						}
+						else if(!result.value){
+							// check if original document was returned...the value in the returned new doc will be null
+							res.status(404).json({
+								message: "Could not find " + collectionName + " document in database",
+								data: result
+							});
+							resolve();
+						}
+						else{
+							res.status(200).json({
+								message: "Updated " + collectionName + " in database",
+								data: result
+							});
+							resolve();
+						}
+					})
+				}
+			})
+		});
+	}
+
 }
 
 export default db

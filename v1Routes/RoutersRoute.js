@@ -48,7 +48,7 @@ routersRouter.route('/')
 
 			database.connect(paths.mongodb)
 				.then(
-					function(){
+					() => {
 						var routerCollection = database.db.collection('routers');
 
 						routerCollection.find().toArray(function(err, docs){
@@ -56,6 +56,40 @@ routersRouter.route('/')
 							res.status(200);
 							database.close();
 						});
+					},
+					function(err){
+						throw("Failed to connect to the database: " + err);
+					})
+		})
+	.patch(
+		function checkJSONValues(req, res, next){
+			var router = req.body;
+			var router_schema = tableConfigs.router_patch_schema;
+			var jv = new jsonValidation.JSONValidation();
+
+			var results = jv.validate(router, router_schema);
+
+			!results.ok ? res.status(400).send("Invalid entries: " + results.errors.join(", ") + " at path " + results.path) : next()
+		},
+		function(req, res, next){
+			var mac_address = req.body.mac_address;
+			var router = req.body;
+			var database = new db();
+
+			database.connect(paths.mongodb)
+				.then(
+					() => {
+						let filter = {};
+						filter["mac_address"] = { $eq: mac_address};
+
+						database.findAndUpdate('routers', req, res, filter)
+							.then(
+								() => {
+									console.log('success');
+								})
+							.catch((err) => {
+								console.log(err);
+							})				
 					},
 					function(err){
 						throw("Failed to connect to the database: " + err);
