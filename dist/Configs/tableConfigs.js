@@ -58,5 +58,15 @@ exports.default = {
 			"client_transmit_retries": { "type": "string", pattern: '^[0-9]{0,}$', required: true },
 			"client_retrieve_retries": { "type": "string", pattern: '^[0-9]{0,}$', required: true }
 		}
+	},
+	router_patch_schema: {
+		"type": "object",
+		"properties": {
+			"latitude": { "type": "string", pattern: '^[0-9]{1,}$', required: false },
+			"longitude": { "type": "string", pattern: '^[0-9]{1,}$', required: false },
+			"time_created": { "type": "string", pattern: '^[0-9]{1,}$', required: false },
+			"time_modified": { "type": "string", pattern: '^[0-9]{0,}$', required: true },
+			"mac_address": { "type": "string", pattern: '^.{1,}$', required: true }
+		}
 	}
 };

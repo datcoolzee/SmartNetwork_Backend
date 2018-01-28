@@ -70,6 +70,31 @@ routersRouter.route('/').post(function checkJSONValues(req, res, next) {
 	}, function (err) {
 		throw "Failed to connect to the database: " + err;
 	});
+}).patch(function checkJSONValues(req, res, next) {
+	var router = req.body;
+	var router_schema = _tableConfigs2.default.router_patch_schema;
+	var jv = new _jsonValidation2.default.JSONValidation();
+
+	var results = jv.validate(router, router_schema);
+
+	!results.ok ? res.status(400).send("Invalid entries: " + results.errors.join(", ") + " at path " + results.path) : next();
+}, function (req, res, next) {
+	var mac_address = req.body.mac_address;
+	var router = req.body;
+	var database = new _db2.default();
+
+	database.connect(_paths2.default.mongodb).then(function () {
+		var filter = {};
+		filter["mac_address"] = { $eq: mac_address };
+
+		database.findAndUpdate('routers', req, res, filter).then(function () {
+			console.log('success');
+		}).catch(function (err) {
+			console.log(err);
+		});
+	}, function (err) {
+		throw "Failed to connect to the database: " + err;
+	});
 });
 
 routersRouter.route(_paths2.default.routerByMacAddress).get(function (req, res, next) {
