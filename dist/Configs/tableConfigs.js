@@ -68,5 +68,18 @@ exports.default = {
 			"time_modified": { "type": "string", pattern: '^[0-9]{0,}$', required: true },
 			"mac_address": { "type": "string", pattern: '^.{1,}$', required: true }
 		}
+	},
+	address_patch_schema: {
+		"type": "object",
+		"properties": {
+			"apartment_number": { "type": "string", pattern: '^[0-9]{0,}$' },
+			"apartment_floor": { "type": "string", pattern: '^[0-9]{0,}$' },
+			"city": { "type": "string", pattern: '^.{1,}$', required: false },
+			"zipcode": { "type": "string", pattern: '^.{5,}$', required: false },
+			"state": { "type": "string", pattern: '^.{2,}$', required: false },
+			"street_address": { "type": "string", pattern: '^.{1,}$', required: false },
+			"country": { "type": "string", pattern: '^.{1,}$', required: false },
+			"mac_address": { "type": "string", pattern: '^.{1,}$', required: true }
+		}
 	}
 };

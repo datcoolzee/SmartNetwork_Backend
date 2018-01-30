@@ -90,11 +90,11 @@ var db = function db() {
 							reject(err.message);
 						} else if (!result.value) {
 							// check if original document was returned...the value in the returned new doc will be null
-							res.status(200).json({
+							res.status(404).json({
 								message: "Could not find " + collectionName + " document in database",
 								data: result
 							});
-							resolve();
+							reject();
 						} else {
 							res.status(200).json({
 								message: "Updated " + collectionName + " in database",
