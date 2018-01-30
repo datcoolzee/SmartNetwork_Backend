@@ -101,7 +101,7 @@ class db{
 								message: "Could not find " + collectionName + " document in database",
 								data: result
 							});
-							resolve();
+							reject();
 						}
 						else{
 							res.status(200).json({
