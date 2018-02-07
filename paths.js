@@ -7,4 +7,6 @@ export default {
     pindrops: '/pindrops',
     routerByMacAddress: '/by-mac-address/:mac_address',
     addressByMacAddress: '/by-mac-address/:mac_address',
+    heatmapByMacAddress: '/by-mac-address/:mac_address',
+    heatmapByHeatmapId: '/by-id/:heatmap_id',
 }
