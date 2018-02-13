@@ -30,14 +30,15 @@ pindropsRouter.route('/')
 						.then(
 							() => {
 								console.log('success');
+								database.close();
 							}
 						)
 						.catch(
 							(err) => {
 									console.log(err);
+									database.close();
 								}
 							)
-						database.close();
 					}
 				)
 		})
@@ -63,6 +64,7 @@ pindropsRouter.route('/')
 					},
 					(err) => {
 						throw("Failed to connect to the database: " + err);
+						database.close();
 					}
 				)
 		})

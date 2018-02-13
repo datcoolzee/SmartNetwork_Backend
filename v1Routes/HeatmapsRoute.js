@@ -30,12 +30,13 @@ heatmapsRouter.route('/')
 							.then(
 								() => {
 									console.log("success");
+									database.close();
 								})
 							.catch(
 								(err) => {
 									console.log('error ' + err);
+									database.close();
 								})
-							database.close();
 					}
 				)
 		})
@@ -61,6 +62,7 @@ heatmapsRouter.route('/')
 					},
 					(err) => {
 						throw("Failed to connect to the database: " + err);
+						database.close();
 					}
 				)
 		});
@@ -85,13 +87,16 @@ heatmapsRouter.route(paths.heatmapByMacAddress)
 								// 404 indicates that the data doesnt exist in the database
 								res.status(404).send("Heatmap with MAC Address " + mac_address + " could not be found");
 							}
+							database.close();
 						})
 						.catch((err) => {
 							res.status(500).send("Server Error: Failed to GET " + err);
+							database.close();
 						});
 				},
 				function(err){
 					throw("Failed to connect to the database: " + err);
+					database.close();
 				}
 			)
 	});

@@ -30,12 +30,13 @@ connectionStatsRouter.route('/')
 							.then(
 								() => {
 									console.log('success');
+									database.close();
 								})
 							.catch(
 								(err) => {
 									console.log('error ' + err);
+									database.close();
 								})
-						database.close();
 					}
 				)
 		})
@@ -61,6 +62,7 @@ connectionStatsRouter.route('/')
 					},
 					(err) => {
 						throw("Failed to connect to the database: " + err);
+						database.close();
 					}
 				)
 		});
