@@ -39,12 +39,12 @@ exports.default = {
 	pindrop_schema: {
 		"type": "object",
 		"properties": {
-			"heatmap_id": { "type": "string", pattern: '^[0-9]{1,}$' },
+			"heatmap_id": { "type": "string", pattern: '^.{1,}$', required: true },
 			"latitude": { "type": "string", pattern: '^[0-9]{1,}$', required: true },
 			"longitude": { "type": "string", pattern: '^[0-9]{1,}$', required: true },
 			"time_created": { "type": "string", pattern: '^[0-9]{1,}$', required: true },
 			"time_modified": { "type": "string", pattern: '^.{0,}$', required: true },
-			"connection_stats_id": { "type": "string", pattern: '^[0-9]{1,}$' }
+			"connection_stats_id": { "type": "string", pattern: '^.{1,}$' }
 		}
 	},
 	conn_stat_schema: {

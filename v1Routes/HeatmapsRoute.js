@@ -4,6 +4,8 @@ import jsonValidation from 'json-validation';
 import tableConfigs from '../Configs/tableConfigs';
 import paths from '../paths';
 import db from '../db';
+import asyncMap from '../helper';
+var ObjectId = require('mongodb').ObjectId;
 
 var heatmapsRouter = express.Router();
 
@@ -76,7 +78,7 @@ heatmapsRouter.route(paths.heatmapByMacAddress)
 				function(){
 					var heatmapsCollection = database.db.collection('heatmaps');
 
-					// find router in routers db according to existing mac_address field and value from req 
+					// find heatmap in heatmaps db according to existing mac_address field and value from req 
 					heatmapsCollection.find({ "mac_address" : { $eq : mac_address }}).toArray()
 						.then((heatmaps) => {
 							if(heatmaps && heatmaps.length > 0){
@@ -93,6 +95,58 @@ heatmapsRouter.route(paths.heatmapByMacAddress)
 							res.status(500).send("Server Error: Failed to GET " + err);
 							database.close();
 						});
+				},
+				function(err){
+					throw("Failed to connect to the database: " + err);
+					database.close();
+				}
+			)
+	});
+heatmapsRouter.route(paths.heatmapByHeatmapId)
+	.get(function(req, res, next){
+		var heatmapId = req.params.heatmap_id;
+		var database = new db();
+
+		database.connect(paths.mongodb)
+			.then(
+				function(){
+					var heatmapsCollection = database.db.collection('heatmaps');
+
+					heatmapsCollection.findOne({"_id" : { $eq : new ObjectId(heatmapId)}})
+						.then((heatmap) => {
+							var pindropsCollection = database.db.collection('pindrops');
+
+							pindropsCollection.find({"heatmap_id": { $eq : heatmapId}}).toArray(async function(err, docs){
+								if(!err){
+									var connStatsCollection = database.db.collection('connection-statistics');
+
+									var obtainConnStatsWithPindrop = await asyncMap(docs, async (pindrop) => {
+														var connStat = await connStatsCollection.findOne({"_id" : { $eq : ObjectId(pindrop.connection_stats_id)}})
+														return {
+															...pindrop,
+															connection_stat: connStat 
+														};
+											});
+
+									var fullHeatmap = {
+										...heatmap,
+										pindrops: obtainConnStatsWithPindrop
+
+									};
+
+									res.json(fullHeatmap);
+									res.status(200);
+								}
+								else{
+									res.status(500).send("Internal server error");
+								}
+								database.close();
+							})
+						})
+						.catch((err) => {
+							res.status(500).send("Server Error: Failed to GET " + err);
+							database.close();
+						});					
 				},
 				function(err){
 					throw("Failed to connect to the database: " + err);

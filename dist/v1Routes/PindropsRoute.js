@@ -47,10 +47,11 @@ pindropsRouter.route('/').post(function checkJSONValues(req, res, next) {
 	database.connect(_paths2.default.mongodb).then(function () {
 		database.insertOne("pindrops", pindrop, res).then(function () {
 			console.log('success');
+			database.close();
 		}).catch(function (err) {
 			console.log(err);
+			database.close();
 		});
-		database.close();
 	});
 }).get(function (req, res, next) {
 	var database = new _db2.default();
@@ -69,6 +70,7 @@ pindropsRouter.route('/').post(function checkJSONValues(req, res, next) {
 		});
 	}, function (err) {
 		throw "Failed to connect to the database: " + err;
+		database.close();
 	});
 });
 
