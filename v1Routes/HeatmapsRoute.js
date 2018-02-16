@@ -112,25 +112,19 @@ heatmapsRouter.route(paths.heatmapByHeatmapId)
 				function(){
 					var heatmapsCollection = database.db.collection('heatmaps');
 
-					heatmapsCollection.findOne({"_id" : { $eq : new ObjectId(heatmapId)}})
+					heatmapsCollection.findOne({"_id" : { $eq : ObjectId.isValid(heatmapId) ? new ObjectId(heatmapId) : null }})
 						.then((heatmap) => {
+							if(!heatmap){
+								throw("Invalid Id: Bad Request");
+							}
+
 							var pindropsCollection = database.db.collection('pindrops');
 
-							pindropsCollection.find({"heatmap_id": { $eq : heatmapId}}).toArray(async function(err, docs){
+							pindropsCollection.find({"heatmap_id": { $eq : heatmapId }}).toArray(function(err, docs){
 								if(!err){
-									var connStatsCollection = database.db.collection('connection-statistics');
-
-									var obtainConnStatsWithPindrop = await asyncMap(docs, async (pindrop) => {
-														var connStat = await connStatsCollection.findOne({"_id" : { $eq : ObjectId(pindrop.connection_stats_id)}})
-														return {
-															...pindrop,
-															connection_stat: connStat 
-														};
-											});
-
 									var fullHeatmap = {
 										...heatmap,
-										pindrops: obtainConnStatsWithPindrop
+										pindrops: docs
 
 									};
 
@@ -141,15 +135,19 @@ heatmapsRouter.route(paths.heatmapByHeatmapId)
 									res.status(500).send("Internal server error");
 								}
 								database.close();
+							},
+							function(err){
+								throw("Failed to connect to the database: ");
+								database.close();
 							})
 						})
 						.catch((err) => {
-							res.status(500).send("Server Error: Failed to GET " + err);
+							res.status(500).send(err);
 							database.close();
 						});					
 				},
 				function(err){
-					throw("Failed to connect to the database: " + err);
+					res.status(500).send("Internal server error");
 					database.close();
 				}
 			)

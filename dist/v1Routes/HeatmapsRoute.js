@@ -4,17 +4,9 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
-var _regenerator = require('babel-runtime/regenerator');
-
-var _regenerator2 = _interopRequireDefault(_regenerator);
-
 var _extends2 = require('babel-runtime/helpers/extends');
 
 var _extends3 = _interopRequireDefault(_extends2);
-
-var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
-
-var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
 var _express = require('express');
 
@@ -124,87 +116,42 @@ heatmapsRouter.route(_paths2.default.heatmapByHeatmapId).get(function (req, res,
 	database.connect(_paths2.default.mongodb).then(function () {
 		var heatmapsCollection = database.db.collection('heatmaps');
 
-		heatmapsCollection.findOne({ "_id": { $eq: new ObjectId(heatmapId) } }).then(function (heatmap) {
+		heatmapsCollection.findOne({ "_id": { $eq: ObjectId.isValid(heatmapId) ? new ObjectId(heatmapId) : null } }).then(function (heatmap) {
+			if (!heatmap) {
+				throw "Invalid Id: Bad Request";
+			}
+
 			var pindropsCollection = database.db.collection('pindrops');
 
-			pindropsCollection.find({ "heatmap_id": { $eq: heatmapId } }).toArray(function () {
-				var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2(err, docs) {
-					var _this = this;
+			pindropsCollection.find({ "heatmap_id": { $eq: heatmapId } }).toArray(function (err, docs) {
+				if (!err) {
+					// var connStatsCollection = database.db.collection('connection-statistics');
 
-					var connStatsCollection, obtainConnStatsWithPindrop, fullHeatmap;
-					return _regenerator2.default.wrap(function _callee2$(_context2) {
-						while (1) {
-							switch (_context2.prev = _context2.next) {
-								case 0:
-									if (err) {
-										_context2.next = 10;
-										break;
-									}
+					// var obtainConnStatsWithPindrop = await asyncMap(docs, async (pindrop) => {
+					// 					var connStat = await connStatsCollection.findOne({"_id" : { $eq : ObjectId(pindrop.connection_stats_id)}})
+					// 					return {
+					// 						...pindrop,
+					// 						connection_stat: connStat 
+					// 					};
+					// 		});
 
-									connStatsCollection = database.db.collection('connection-statistics');
-									_context2.next = 4;
-									return (0, _helper2.default)(docs, function () {
-										var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(pindrop) {
-											var connStat;
-											return _regenerator2.default.wrap(function _callee$(_context) {
-												while (1) {
-													switch (_context.prev = _context.next) {
-														case 0:
-															_context.next = 2;
-															return connStatsCollection.findOne({ "_id": { $eq: ObjectId(pindrop.connection_stats_id) } });
+					var fullHeatmap = (0, _extends3.default)({}, heatmap, {
+						pindrops: docs
 
-														case 2:
-															connStat = _context.sent;
-															return _context.abrupt('return', (0, _extends3.default)({}, pindrop, {
-																connection_stat: connStat
-															}));
+					});
 
-														case 4:
-														case 'end':
-															return _context.stop();
-													}
-												}
-											}, _callee, _this);
-										}));
-
-										return function (_x3) {
-											return _ref2.apply(this, arguments);
-										};
-									}());
-
-								case 4:
-									obtainConnStatsWithPindrop = _context2.sent;
-									fullHeatmap = (0, _extends3.default)({}, heatmap, {
-										pindrops: obtainConnStatsWithPindrop
-
-									});
-
-
-									res.json(fullHeatmap);
-									res.status(200);
-									_context2.next = 11;
-									break;
-
-								case 10:
-									res.status(500).send("Internal server error");
-
-								case 11:
-									database.close();
-
-								case 12:
-								case 'end':
-									return _context2.stop();
-							}
-						}
-					}, _callee2, this);
-				}));
-
-				return function (_x, _x2) {
-					return _ref.apply(this, arguments);
-				};
-			}());
+					res.json(fullHeatmap);
+					res.status(200);
+				} else {
+					res.status(500).send("Internal server error");
+				}
+				database.close();
+			}, function (err) {
+				throw "Failed to connect to the database: " + err;
+				database.close();
+			});
 		}).catch(function (err) {
-			res.status(500).send("Server Error: Failed to GET " + err);
+			res.status(500).send(err);
 			database.close();
 		});
 	}, function (err) {

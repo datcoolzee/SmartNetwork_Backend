@@ -39,7 +39,19 @@ export default {
 			"longitude": { "type" : "string", pattern: '^[0-9]{1,}$', required: true },
 			"time_created": { "type" : "string", pattern: '^[0-9]{1,}$', required: true },
 			"time_modified": { "type": "string", pattern: '^.{0,}$', required: true },
-			"connection_stats_id": { "type": "string", pattern: '^.{1,}$' },
+			"connection_stat": { 
+				"type": "object", 
+				"properties" : {
+					"upstream_bps": { "type" : "string", pattern: '^[0-9]{1,}$', required: true },
+					"client_rssi": { "type" : "string", pattern: '^[0-9]{1,}$', required: true },
+					"router_rssi": { "type" : "string", pattern: '^[0-9]{1,}$', required: true },
+					"downstream_bps": { "type" : "string", pattern: '^[0-9]{1,}$', required: true },
+					"client_transmit_speed": { "type": "string", pattern: '^.{1,}$', required: true },
+					"client_receive_speed": { "type": "string", pattern: '^[0-9]{1,}$', required: true },
+					"client_transmit_retries": { "type": "string", pattern: '^[0-9]{0,}$', required: true },
+					"client_retrieve_retries": { "type": "string", pattern: '^[0-9]{0,}$', required: true },
+				}
+			},
 		}
 	},
 	conn_stat_schema: {
