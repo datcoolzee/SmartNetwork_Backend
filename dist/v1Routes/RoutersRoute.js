@@ -51,10 +51,11 @@ routersRouter.route('/').post(function checkJSONValues(req, res, next) {
 	database.connect(_paths2.default.mongodb).then(function () {
 		database.insertOne('routers', router, res).then(function () {
 			console.log('success');
+			database.close();
 		}).catch(function (err) {
 			console.log(err);
+			database.close();
 		});
-		database.close();
 	});
 }).get(function (req, res, next) {
 	var database = new _db2.default();
@@ -69,6 +70,7 @@ routersRouter.route('/').post(function checkJSONValues(req, res, next) {
 		});
 	}, function (err) {
 		throw "Failed to connect to the database: " + err;
+		database.close();
 	});
 }).patch(function checkJSONValues(req, res, next) {
 	var router = req.body;
@@ -89,11 +91,14 @@ routersRouter.route('/').post(function checkJSONValues(req, res, next) {
 
 		database.findAndUpdate('routers', req, res, filter).then(function () {
 			console.log('success');
+			database.close();
 		}).catch(function (err) {
 			console.log(err);
+			database.close();
 		});
 	}, function (err) {
 		throw "Failed to connect to the database: " + err;
+		database.close();
 	});
 });
 
@@ -113,11 +118,14 @@ routersRouter.route(_paths2.default.routerByMacAddress).get(function (req, res, 
 				// 404 indicates that the data doesnt exist in the database
 				res.status(404).send("Router with MAC Address " + mac_address + " could not be found");
 			}
+			database.close();
 		}).catch(function (err) {
 			res.status(500).send("Server Error: Failed to GET " + err);
+			database.close();
 		});
 	}, function (err) {
 		throw "Failed to connect to the database: " + err;
+		database.close();
 	});
 });
 

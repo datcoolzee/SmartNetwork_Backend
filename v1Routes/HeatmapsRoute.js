@@ -4,6 +4,8 @@ import jsonValidation from 'json-validation';
 import tableConfigs from '../Configs/tableConfigs';
 import paths from '../paths';
 import db from '../db';
+import asyncMap from '../helper';
+var ObjectId = require('mongodb').ObjectId;
 
 var heatmapsRouter = express.Router();
 
@@ -30,12 +32,13 @@ heatmapsRouter.route('/')
 							.then(
 								() => {
 									console.log("success");
+									database.close();
 								})
 							.catch(
 								(err) => {
 									console.log('error ' + err);
+									database.close();
 								})
-							database.close();
 					}
 				)
 		})
@@ -61,6 +64,7 @@ heatmapsRouter.route('/')
 					},
 					(err) => {
 						throw("Failed to connect to the database: " + err);
+						database.close();
 					}
 				)
 		});
@@ -74,7 +78,7 @@ heatmapsRouter.route(paths.heatmapByMacAddress)
 				function(){
 					var heatmapsCollection = database.db.collection('heatmaps');
 
-					// find router in routers db according to existing mac_address field and value from req 
+					// find heatmap in heatmaps db according to existing mac_address field and value from req 
 					heatmapsCollection.find({ "mac_address" : { $eq : mac_address }}).toArray()
 						.then((heatmaps) => {
 							if(heatmaps && heatmaps.length > 0){
@@ -85,13 +89,66 @@ heatmapsRouter.route(paths.heatmapByMacAddress)
 								// 404 indicates that the data doesnt exist in the database
 								res.status(404).send("Heatmap with MAC Address " + mac_address + " could not be found");
 							}
+							database.close();
 						})
 						.catch((err) => {
 							res.status(500).send("Server Error: Failed to GET " + err);
+							database.close();
 						});
 				},
 				function(err){
 					throw("Failed to connect to the database: " + err);
+					database.close();
+				}
+			)
+	});
+heatmapsRouter.route(paths.heatmapByHeatmapId)
+	.get(function(req, res, next){
+		var heatmapId = req.params.heatmap_id;
+		var database = new db();
+
+		database.connect(paths.mongodb)
+			.then(
+				function(){
+					var heatmapsCollection = database.db.collection('heatmaps');
+
+					heatmapsCollection.findOne({"_id" : { $eq : ObjectId.isValid(heatmapId) ? new ObjectId(heatmapId) : null }})
+						.then((heatmap) => {
+							if(!heatmap){
+								throw("Invalid Id: Bad Request");
+							}
+
+							var pindropsCollection = database.db.collection('pindrops');
+
+							pindropsCollection.find({"heatmap_id": { $eq : heatmapId }}).toArray(function(err, docs){
+								if(!err){
+									var fullHeatmap = {
+										...heatmap,
+										pindrops: docs
+
+									};
+
+									res.json(fullHeatmap);
+									res.status(200);
+								}
+								else{
+									res.status(500).send("Internal server error");
+								}
+								database.close();
+							},
+							function(err){
+								throw("Failed to connect to the database: ");
+								database.close();
+							})
+						})
+						.catch((err) => {
+							res.status(500).send(err);
+							database.close();
+						});					
+				},
+				function(err){
+					res.status(500).send("Internal server error");
+					database.close();
 				}
 			)
 	});
