@@ -125,16 +125,6 @@ heatmapsRouter.route(_paths2.default.heatmapByHeatmapId).get(function (req, res,
 
 			pindropsCollection.find({ "heatmap_id": { $eq: heatmapId } }).toArray(function (err, docs) {
 				if (!err) {
-					// var connStatsCollection = database.db.collection('connection-statistics');
-
-					// var obtainConnStatsWithPindrop = await asyncMap(docs, async (pindrop) => {
-					// 					var connStat = await connStatsCollection.findOne({"_id" : { $eq : ObjectId(pindrop.connection_stats_id)}})
-					// 					return {
-					// 						...pindrop,
-					// 						connection_stat: connStat 
-					// 					};
-					// 		});
-
 					var fullHeatmap = (0, _extends3.default)({}, heatmap, {
 						pindrops: docs
 
@@ -147,7 +137,7 @@ heatmapsRouter.route(_paths2.default.heatmapByHeatmapId).get(function (req, res,
 				}
 				database.close();
 			}, function (err) {
-				throw "Failed to connect to the database: " + err;
+				throw "Failed to connect to the database: ";
 				database.close();
 			});
 		}).catch(function (err) {
@@ -155,7 +145,7 @@ heatmapsRouter.route(_paths2.default.heatmapByHeatmapId).get(function (req, res,
 			database.close();
 		});
 	}, function (err) {
-		throw "Failed to connect to the database: " + err;
+		res.status(500).send("Internal server error");
 		database.close();
 	});
 });
