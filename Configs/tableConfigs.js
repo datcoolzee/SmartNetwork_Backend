@@ -12,6 +12,7 @@ export default {
 			"mac_address": { "type": "string", pattern: '^.{1,}$', required: true },
 			"latitude": { "type" : "string", pattern: '^[0-9.-]{1,}$', required: true },
 			"longitude": { "type" : "string", pattern: '^[0-9.-]{1,}$', required: true },
+			"room": { "type" : "string", pattern: '^.{0,}$', required: false },
 		}
 	},
 	heatmap_schema: {
