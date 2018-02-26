@@ -14,7 +14,9 @@ exports.default = {
 			"state": { "type": "string", pattern: '^.{2,}$', required: true },
 			"street_address": { "type": "string", pattern: '^.{1,}$', required: true },
 			"country": { "type": "string", pattern: '^.{1,}$', required: true },
-			"mac_address": { "type": "string", pattern: '^.{1,}$', required: true }
+			"mac_address": { "type": "string", pattern: '^.{1,}$', required: true },
+			"latitude": { "type": "string", pattern: '^[0-9.-]{1,}$', required: true },
+			"longitude": { "type": "string", pattern: '^[0-9.-]{1,}$', required: true }
 		}
 	},
 	heatmap_schema: {
@@ -29,8 +31,8 @@ exports.default = {
 	router_schema: {
 		"type": "object",
 		"properties": {
-			"latitude": { "type": "string", pattern: '^[0-9]{1,}$', required: true },
-			"longitude": { "type": "string", pattern: '^[0-9]{1,}$', required: true },
+			"latitude": { "type": "string", pattern: '^[0-9.-]{1,}$', required: true },
+			"longitude": { "type": "string", pattern: '^[0-9.-]{1,}$', required: true },
 			"time_created": { "type": "string", pattern: '^[0-9]{1,}$', required: true },
 			"time_modified": { "type": "string", pattern: '^[0-9]{0,}$', required: true },
 			"mac_address": { "type": "string", pattern: '^.{1,}$', required: true }
@@ -40,8 +42,8 @@ exports.default = {
 		"type": "object",
 		"properties": {
 			"heatmap_id": { "type": "string", pattern: '^.{1,}$', required: true },
-			"latitude": { "type": "string", pattern: '^[0-9]{1,}$', required: true },
-			"longitude": { "type": "string", pattern: '^[0-9]{1,}$', required: true },
+			"latitude": { "type": "string", pattern: '^[0-9.-]{1,}$', required: true },
+			"longitude": { "type": "string", pattern: '^[0-9.-]{1,}$', required: true },
 			"time_created": { "type": "string", pattern: '^[0-9]{1,}$', required: true },
 			"time_modified": { "type": "string", pattern: '^.{0,}$', required: true },
 			"connection_stat": {
@@ -62,8 +64,8 @@ exports.default = {
 	router_patch_schema: {
 		"type": "object",
 		"properties": {
-			"latitude": { "type": "string", pattern: '^[0-9]{1,}$', required: false },
-			"longitude": { "type": "string", pattern: '^[0-9]{1,}$', required: false },
+			"latitude": { "type": "string", pattern: '^[0-9.-]{1,}$', required: false },
+			"longitude": { "type": "string", pattern: '^[0-9.-]{1,}$', required: false },
 			"time_created": { "type": "string", pattern: '^[0-9]{1,}$', required: false },
 			"time_modified": { "type": "string", pattern: '^[0-9]{0,}$', required: true },
 			"mac_address": { "type": "string", pattern: '^.{1,}$', required: true }
@@ -80,8 +82,8 @@ exports.default = {
 			"street_address": { "type": "string", pattern: '^.{1,}$', required: false },
 			"country": { "type": "string", pattern: '^.{1,}$', required: false },
 			"mac_address": { "type": "string", pattern: '^.{1,}$', required: true },
-			"latitude": { "type": "string", pattern: '^[0-9]{1,}$', required: true },
-			"longitude": { "type": "string", pattern: '^[0-9]{1,}$', required: true }
+			"latitude": { "type": "string", pattern: '^[0-9.-]{1,}$', required: true },
+			"longitude": { "type": "string", pattern: '^[0-9.-]{1,}$', required: true }
 		}
 	}
 };
