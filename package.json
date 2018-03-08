@@ -4,7 +4,7 @@
   "description": "A mongoDB based backend for the smartnet application",
   "main": "index.js",
   "scripts": {
-    "build": "rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./.babelrc,./package.json,./package-lock.json,./npm-debug.log --copy-files",
+    "build": "rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./.babelrc,./package.json,./package-lock.json,./npm-debug.log --copy-files && chmod 755 dist/server.js",
     "start": "node dist/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
