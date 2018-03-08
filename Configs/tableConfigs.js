@@ -2,8 +2,8 @@ export default {
 	address_schema: {
 		"type" : "object",
 		"properties" : {
-			"apartment_number": { "type" : "string", pattern: '^[0-9]{0,}$' },
-			"apartment_floor": { "type" : "string", pattern: '^[0-9]{0,}$' },
+			"apartment_number": { "type" : "string", pattern: '^[0-9a-zA-Z]{0,}$' },
+			"apartment_floor": { "type" : "string", pattern: '^[0-9a-zA-Z]{0,}$' },
 			"city": { "type" : "string", pattern: '^.{1,}$', required: true  },
 			"zipcode": { "type" : "string", pattern: '^.{5,}$', required: true  },
 			"state": { "type" : "string", pattern: '^.{2,}$', required: true  },
