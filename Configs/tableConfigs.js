@@ -54,7 +54,7 @@ export default {
 					"client_transmit_retries": { "type": "string", pattern: '^[0-9-]{0,}$', required: true },
 					"client_retrieve_retries": { "type": "string", pattern: '^[0-9-]{0,}$', required: true },
 					"jitter": { "type": "string", pattern: '^[0-9-.]{1,}$', required: true }, 
-					"lost_percentage": { "type": "string", pattern: '^[0-9-.]{1,}$', required: true }, 
+					"lost_percentage": { "type": "string", pattern: '^[0-9-.]{1,}$', required: true },  
 				}
 			},
 		}
