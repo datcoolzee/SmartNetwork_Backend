@@ -1,7 +1,7 @@
 export default {
 	address_schema: {
 		"type" : "object",
-		"properties" : {
+		"properties" : { 
 			"apartment_number": { "type" : "string", pattern: '^[0-9a-zA-Z]{0,}$' },
 			"apartment_floor": { "type" : "string", pattern: '^[0-9a-zA-Z]{0,}$' },
 			"city": { "type" : "string", pattern: '^.{1,}$', required: true  },
@@ -34,7 +34,7 @@ export default {
 			"mac_address": { "type": "string", pattern: '^.{1,}$', required: true },
 		}
 	},
-	pindrop_schema: {
+	pindrop_schema: { 
 		"type": "object",
 		"properties" : {
 			"heatmap_id": { "type" : "string", pattern: '^.{1,}$', required: true },
@@ -45,14 +45,14 @@ export default {
 			"connection_stat": { 
 				"type": "object", 
 				"properties" : {
-					"upstream_bps": { "type" : "string", pattern: '^[0-9.]{1,}$', required: true },
-					"client_rssi": { "type" : "string", pattern: '^[0-9]{1,}$', required: true },
-					"router_rssi": { "type" : "string", pattern: '^[0-9]{1,}$', required: true },
-					"downstream_bps": { "type" : "string", pattern: '^[0-9.]{1,}$', required: true },
+					"upstream_bps": { "type" : "string", pattern: '^[0-9.-]{1,}$', required: true },
+					"client_rssi": { "type" : "string", pattern: '^[0-9-]{1,}$', required: true },
+					"router_rssi": { "type" : "string", pattern: '^[0-9-]{1,}$', required: true },
+					"downstream_bps": { "type" : "string", pattern: '^[0-9.-]{1,}$', required: true },
 					"client_transmit_speed": { "type": "string", pattern: '^.{1,}$', required: true },
-					"client_receive_speed": { "type": "string", pattern: '^[0-9.]{1,}$', required: true },
-					"client_transmit_retries": { "type": "string", pattern: '^[0-9]{0,}$', required: true },
-					"client_retrieve_retries": { "type": "string", pattern: '^[0-9]{0,}$', required: true },
+					"client_receive_speed": { "type": "string", pattern: '^[0-9.-]{1,}$', required: true },
+					"client_transmit_retries": { "type": "string", pattern: '^[0-9-]{0,}$', required: true },
+					"client_retrieve_retries": { "type": "string", pattern: '^[0-9-]{0,}$', required: true },
 				}
 			},
 		}
