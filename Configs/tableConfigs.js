@@ -1,7 +1,7 @@
 export default {
 	address_schema: {
 		"type" : "object",
-		"properties" : {
+		"properties" : { 
 			"apartment_number": { "type" : "string", pattern: '^[0-9a-zA-Z]{0,}$' },
 			"apartment_floor": { "type" : "string", pattern: '^[0-9a-zA-Z]{0,}$' },
 			"city": { "type" : "string", pattern: '^.{1,}$', required: true  },
