@@ -34,7 +34,7 @@ export default {
 			"mac_address": { "type": "string", pattern: '^.{1,}$', required: true },
 		}
 	},
-	pindrop_schema: {
+	pindrop_schema: { 
 		"type": "object",
 		"properties" : {
 			"heatmap_id": { "type" : "string", pattern: '^.{1,}$', required: true },
