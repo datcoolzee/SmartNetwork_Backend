@@ -53,7 +53,7 @@ export default {
 					"client_receive_speed": { "type": "string", pattern: '^[0-9.-A-Za-z]{1,}$', required: true },
 					"client_transmit_retries": { "type": "string", pattern: '^[0-9-A-Za-z]{0,}$', required: true },
 					"client_retrieve_retries": { "type": "string", pattern: '^[0-9-A-Za-z]{0,}$', required: true },
-					"jitter": { "type": "string", pattern: '^[0-9-.A-Za-z]{1,}$', required: true }, 
+					"jitter": { "type": "string", pattern: '^[0-9-.A-Za-z]{1,}$', required: true },  
 					"lost_percentage": { "type": "string", pattern: '^[0-9-.A-Za-z]{1,}$', required: true },  
 				}
 			},
